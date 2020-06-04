@@ -11,6 +11,7 @@ import pathlib
 import traceback
 import math
 import re
+from subprocess import check_output
 
 import aiohttp
 import discord
@@ -649,9 +650,9 @@ class MusicBot(discord.Client):
                     entry = player.current_entry
 
             if entry:
-                prefix = u'\u275A\u275A ' if is_paused else ''
+                prefix = u' \u23F8 ' if is_paused else u' \u25B6 '
 
-                name = u'{}{}'.format(prefix, entry.title)[:128]
+                name = u'{}{}'.format(prefix, entry.title)[:50]+"... - Use _help in #music-control"
                 game = discord.Game(type=0, name=name)
         else:
             game = discord.Game(type=0, name=self.config.status_message.strip()[:128])
@@ -1113,7 +1114,7 @@ class MusicBot(discord.Client):
         """Provides a basic template for embeds"""
         e = discord.Embed()
         e.colour = 7506394
-        e.set_footer(text='Just-Some-Bots/MusicBot ({})'.format(BOTVERSION), icon_url='https://i.imgur.com/gFHBoZA.png')
+        e.set_footer(text='Stats: '+(os.popen("vcgencmd measure_temp").readline().rstrip("\n").replace("temp=","TEMPERATURE: "))+", CPU: "+str(os.popen("top -n1 | awk '/Cpu\(s\):/ {print $2}'").readline().rstrip("\n"))+"%", icon_url='https://cdn0.iconfinder.com/data/icons/interface-editing-and-time-1/64/dashboard-speedometer-gauge-speed-512.png')
         e.set_author(name=self.user.name, url='https://github.com/Just-Some-Bots/MusicBot', icon_url=self.user.avatar_url)
         return e
 
