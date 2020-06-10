@@ -650,7 +650,7 @@ class MusicBot(discord.Client):
                     entry = player.current_entry
 
             if entry:
-                prefix = u' \u23F8 ' if is_paused else u' \u25B6 '
+                prefix = u'\u275A\u275A ' if is_paused else u' \u25B6 '
 
                 name = u'{}{}'.format(prefix, entry.title)[:50]+"... - Use _help in #music-control"
                 game = discord.Game(type=0, name=name)
